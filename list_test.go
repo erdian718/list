@@ -17,7 +17,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestLen(t *testing.T) {
-	if list.Range(0, 1).Take(3).Len() != 3 {
+	if list.Series(0, 1).Take(3).Len() != 3 {
 		t.FailNow()
 	}
 }
@@ -66,14 +66,14 @@ func TestAll(t *testing.T) {
 }
 
 func TestAny(t *testing.T) {
-	ok := list.Range(0, 1).Take(8).Any(func(x interface{}) bool {
+	ok := list.Series(0, 1).Take(8).Any(func(x interface{}) bool {
 		return x == 3
 	})
 	if !ok {
 		t.FailNow()
 	}
 
-	ok = list.Range(0, 1).Take(8).Any(func(x interface{}) bool {
+	ok = list.Series(0, 1).Take(8).Any(func(x interface{}) bool {
 		return x.(int) < 0
 	})
 	if ok {
@@ -93,7 +93,7 @@ func TestCons(t *testing.T) {
 }
 
 func TestMap(t *testing.T) {
-	l := list.Range(0, 1).Map(func(x interface{}) interface{} {
+	l := list.Series(0, 1).Map(func(x interface{}) interface{} {
 		return 2 * x.(int)
 	})
 	if l.Head() != 0 {
@@ -115,7 +115,7 @@ func TestMap(t *testing.T) {
 }
 
 func TestFilter(t *testing.T) {
-	l := list.Range(0, 1).Filter(func(x interface{}) bool {
+	l := list.Series(0, 1).Filter(func(x interface{}) bool {
 		return x.(int)%2 == 0
 	})
 	if l.Head() != 0 {
@@ -137,7 +137,7 @@ func TestFilter(t *testing.T) {
 }
 
 func TestFold(t *testing.T) {
-	r := list.Range(0, 1).Take(8).Fold(0, func(r, x interface{}) interface{} {
+	r := list.Series(0, 1).Take(8).Fold(0, func(r, x interface{}) interface{} {
 		return r.(int) + x.(int)
 	})
 	if r != 28 {
@@ -146,7 +146,7 @@ func TestFold(t *testing.T) {
 }
 
 func TestTake(t *testing.T) {
-	l := list.Range(0, 1).Take(3)
+	l := list.Series(0, 1).Take(3)
 	if l.Len() != 3 {
 		t.FailNow()
 	}
@@ -162,14 +162,14 @@ func TestTake(t *testing.T) {
 }
 
 func TestDrop(t *testing.T) {
-	l := list.Range(0, 1).Drop(3)
+	l := list.Series(0, 1).Drop(3)
 	if l.Head() != 3 {
 		t.FailNow()
 	}
 }
 
 func TestCut(t *testing.T) {
-	l := list.Range(0, 1).Take(6).Cut(3)
+	l := list.Series(0, 1).Take(6).Cut(3)
 	if l.Len() != 3 {
 		t.FailNow()
 	}
@@ -191,7 +191,7 @@ func TestCut(t *testing.T) {
 }
 
 func TestTakeWhile(t *testing.T) {
-	l := list.Range(0, 1).TakeWhile(func(x interface{}) bool {
+	l := list.Series(0, 1).TakeWhile(func(x interface{}) bool {
 		return x.(int) < 3
 	})
 	if l.Len() != 3 {
@@ -216,7 +216,7 @@ func TestTakeWhile(t *testing.T) {
 }
 
 func TestDropWhile(t *testing.T) {
-	l := list.Range(0, 1).DropWhile(func(x interface{}) bool {
+	l := list.Series(0, 1).DropWhile(func(x interface{}) bool {
 		return x.(int) < 3
 	})
 	if l.Head() != 3 {
@@ -225,7 +225,7 @@ func TestDropWhile(t *testing.T) {
 }
 
 func TestCutWhile(t *testing.T) {
-	l := list.Range(0, 1).Take(6).CutWhile(func(x interface{}) bool {
+	l := list.Series(0, 1).Take(6).CutWhile(func(x interface{}) bool {
 		return x.(int) >= 3
 	})
 	if l.Len() != 3 {
@@ -274,8 +274,8 @@ func TestRepeat(t *testing.T) {
 	}
 }
 
-func TestRange(t *testing.T) {
-	l := list.Range(0, 1).Take(3)
+func TestSeries(t *testing.T) {
+	l := list.Series(0, 1).Take(3)
 	if l.Len() != 3 {
 		t.FailNow()
 	}
@@ -291,7 +291,7 @@ func TestRange(t *testing.T) {
 }
 
 func TestConcat(t *testing.T) {
-	a := list.Range(0, 1).Take(3)
+	a := list.Series(0, 1).Take(3)
 	b := list.Repeat(3)
 	c := list.Concat(a, b)
 	if c.Head() != 0 {

@@ -17,10 +17,10 @@ func Repeat(x interface{}) *List {
 	})
 }
 
-// Range makes a list which elements are x, x+s, x+2s...
-func Range(x, s int) *List {
+// Series makes a list which elements are x, x+s, x+2s...
+func Series(x, s int) *List {
 	return New(x, func() *List {
-		return Range(x+s, s)
+		return Series(x+s, s)
 	})
 }
 

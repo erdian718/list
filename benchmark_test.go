@@ -61,20 +61,20 @@ func BenchmarkCut(b *testing.B) {
 }
 
 func BenchmarkTakeWhile(b *testing.B) {
-	list.Range(0, 1).TakeWhile(func(x interface{}) bool {
+	list.Series(0, 1).TakeWhile(func(x interface{}) bool {
 		return x.(int) < b.N
 	}).Force()
 }
 
 func BenchmarkDropWhile(b *testing.B) {
-	list.Range(0, 1).DropWhile(func(x interface{}) bool {
+	list.Series(0, 1).DropWhile(func(x interface{}) bool {
 		return x.(int) < b.N
 	})
 }
 
 func BenchmarkCutWhile(b *testing.B) {
 	n := b.N / 2
-	list.Range(0, 1).Take(b.N).CutWhile(func(x interface{}) bool {
+	list.Series(0, 1).Take(b.N).CutWhile(func(x interface{}) bool {
 		return x.(int) > n
 	}).Force()
 }
