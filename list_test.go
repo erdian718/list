@@ -81,6 +81,17 @@ func TestAny(t *testing.T) {
 	}
 }
 
+func TestCons(t *testing.T) {
+	a := new(list.List)
+	b := a.Cons(0)
+	if b.Head() != 0 {
+		t.FailNow()
+	}
+	if b.Tail() != a {
+		t.FailNow()
+	}
+}
+
 func TestMap(t *testing.T) {
 	l := list.Range(0, 1).Map(func(x interface{}) interface{} {
 		return 2 * x.(int)
@@ -227,6 +238,107 @@ func TestCutWhile(t *testing.T) {
 		t.FailNow()
 	}
 	if l.Tail().Tail().Head() != 2 {
+		t.FailNow()
+	}
+}
+
+func TestMake(t *testing.T) {
+	l := list.Make(0, 1, 2)
+	if l.Len() != 3 {
+		t.FailNow()
+	}
+	if l.Head() != 0 {
+		t.FailNow()
+	}
+	if l.Tail().Head() != 1 {
+		t.FailNow()
+	}
+	if l.Tail().Tail().Head() != 2 {
+		t.FailNow()
+	}
+}
+
+func TestRepeat(t *testing.T) {
+	l := list.Repeat(0).Take(3)
+	if l.Len() != 3 {
+		t.FailNow()
+	}
+	if l.Head() != 0 {
+		t.FailNow()
+	}
+	if l.Tail().Head() != 0 {
+		t.FailNow()
+	}
+	if l.Tail().Tail().Head() != 0 {
+		t.FailNow()
+	}
+}
+
+func TestRange(t *testing.T) {
+	l := list.Range(0, 1).Take(3)
+	if l.Len() != 3 {
+		t.FailNow()
+	}
+	if l.Head() != 0 {
+		t.FailNow()
+	}
+	if l.Tail().Head() != 1 {
+		t.FailNow()
+	}
+	if l.Tail().Tail().Head() != 2 {
+		t.FailNow()
+	}
+}
+
+func TestConcat(t *testing.T) {
+	a := list.Range(0, 1).Take(3)
+	b := list.Repeat(3)
+	c := list.Concat(a, b)
+	if c.Head() != 0 {
+		t.FailNow()
+	}
+	if c.Tail().Head() != 1 {
+		t.FailNow()
+	}
+	if c.Tail().Tail().Head() != 2 {
+		t.FailNow()
+	}
+	if c.Tail().Tail().Tail().Head() != 3 {
+		t.FailNow()
+	}
+	if c.Tail().Tail().Tail().Tail().Head() != 3 {
+		t.FailNow()
+	}
+}
+
+func TestZip(t *testing.T) {
+	var fibs *list.List
+	fibs = list.New(1, func() *list.List {
+		return list.Zip(func(xs ...interface{}) interface{} {
+			return xs[0].(int) + xs[1].(int)
+		}, fibs, fibs.Tail())
+	}).Cons(0)
+	if fibs.Head() != 0 {
+		t.FailNow()
+	}
+	if fibs.Tail().Head() != 1 {
+		t.FailNow()
+	}
+	if fibs.Tail().Tail().Head() != 1 {
+		t.FailNow()
+	}
+	if fibs.Tail().Tail().Tail().Head() != 2 {
+		t.FailNow()
+	}
+	if fibs.Tail().Tail().Tail().Tail().Head() != 3 {
+		t.FailNow()
+	}
+	if fibs.Tail().Tail().Tail().Tail().Tail().Head() != 5 {
+		t.FailNow()
+	}
+
+	l := list.Zip(nil, fibs, nil)
+	if l != nil {
 		t.FailNow()
 	}
 }

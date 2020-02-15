@@ -74,6 +74,13 @@ func (a *List) Any(f func(interface{}) bool) bool {
 	return false
 }
 
+// Cons prepends the element x to the list.
+func (a *List) Cons(x interface{}) *List {
+	return New(x, func() *List {
+		return a
+	})
+}
+
 // Map applies the given f function to each element of the list and returns the new list.
 func (a *List) Map(f func(interface{}) interface{}) *List {
 	if a == nil {

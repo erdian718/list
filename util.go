@@ -1,12 +1,12 @@
 package list
 
-// Make makes a list using the elements of xs.
-func Make(xs []interface{}) *List {
+// Make makes a list using xs.
+func Make(xs ...interface{}) *List {
 	if len(xs) == 0 {
 		return nil
 	}
 	return New(xs[0], func() *List {
-		return Make(xs[1:])
+		return Make(xs[1:]...)
 	})
 }
 
@@ -21,13 +21,6 @@ func Repeat(x interface{}) *List {
 func Range(x, s int) *List {
 	return New(x, func() *List {
 		return Range(x+s, s)
-	})
-}
-
-// Cons prepends the element x to the list.
-func Cons(x interface{}, l *List) *List {
-	return New(x, func() *List {
-		return l
 	})
 }
 
